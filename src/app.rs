@@ -1,36 +1,9 @@
 use crate::page::Page;
 
-pub struct Signal<S: Iterator> {
-    source: S,
-    pub points: Vec<S::Item>,
-    tick_rate: usize,
+pub enum Focus {
+    Sidebar,
+    Page,
 }
-
-// impl<S> Signal<S>
-// where
-//     S: Iterator,
-// {
-//     fn on_tick(&mut self) {
-//         for _ in 0..self.tick_rate {
-//             self.points.remove(0);
-//         }
-//         self.points
-//             .extend(self.source.by_ref().take(self.tick_rate))
-//     }
-// }
-//
-// pub struct Signals {
-//     pub sin1: Signal<S>,
-//     pub sin2: Signal<S>,
-//     pub window: [f64; 2],
-// }
-//
-// impl Signals {
-//     fn on_tick(&mut self) {
-//         self.window[0] += 1.0;
-//         self.window[1] += 1.0;
-//     }
-// }
 
 pub enum InputMode {
     Normal,
@@ -47,6 +20,7 @@ pub struct App<'a> {
     pub input: String,
     pub input_mode: InputMode,
     pub page: Page,
+    pub focus: Focus,
 }
 
 impl<'a> App<'a> {
@@ -61,14 +35,7 @@ impl<'a> App<'a> {
             input: String::new(),
             input_mode: InputMode::Normal,
             page: Page::Dashboard,
+            focus: Focus::Sidebar,
         }
     }
-    //
-    // pub fn on_tick(&mut self) {
-    //     self.progress += 0.001;
-    //     if self.progress > 1.0 {
-    //         self.progress = 0.0;
-    //     }
-    //     // self.
-    // }
 }

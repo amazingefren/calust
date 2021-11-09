@@ -1,7 +1,14 @@
 use super::App;
-use tui::{Frame, backend::Backend, layout::{Alignment, Rect}, style::{Color, Style}, text::{Spans, Text}, widgets::{Block, BorderType, Borders, Paragraph}};
+use tui::{
+    backend::Backend,
+    layout::{Alignment, Rect},
+    style::{Color, Style},
+    text::{Spans, Text},
+    widgets::{Block, BorderType, Borders, Paragraph},
+    Frame,
+};
 
-pub fn draw_dashboard<B>(f: &mut Frame<B>, app: &App, chunk: Rect)
+pub fn draw_dashboard<B>(f: &mut Frame<B>, app: &App, chunk: Rect, focus: bool)
 where
     B: Backend,
 {
@@ -12,6 +19,7 @@ where
             .title_alignment(Alignment::Right)
             .borders(Borders::ALL)
             .border_type(BorderType::Rounded)
+            .border_style(Style::default().fg(if focus { Color::Red } else { Color::Reset })),
     );
 
     f.render_widget(widget, chunk);

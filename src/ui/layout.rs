@@ -1,11 +1,14 @@
 use super::{sidebar::draw_sidebar, App};
-use crate::{app::InputMode, page::draw_page};
+use crate::{
+    app::{Focus, InputMode},
+    page::draw_page,
+};
 use tui::{
     backend::Backend,
     layout::{Constraint, Direction, Layout, Rect},
     style::{Color, Style},
     text::{Spans, Text},
-    widgets::{Block, Borders, Paragraph},
+    widgets::Paragraph,
     Frame,
 };
 
@@ -81,8 +84,14 @@ where
                 width: f_size.width,
             });
 
-        draw_sidebar(f, app, top_chunks[0]);
-        draw_page(f, app, top_chunks[1]);
+        let mut page_focus: bool = false;
+        let mut side_focus: bool = false;
+        match app.focus {
+            Focus::Page => page_focus = true,
+            Focus::Sidebar => side_focus = true,
+        }
+        draw_sidebar(f, app, top_chunks[0], side_focus);
+        draw_page(f, app, top_chunks[1], page_focus);
         draw_status(f, app, bot_chunks[0]);
     } else {
         draw_error(f, "Y SO SMALL")
