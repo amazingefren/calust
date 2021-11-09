@@ -1,11 +1,11 @@
 mod app;
-// mod event;
+mod event;
 mod page;
 mod ui;
 
 use app::App;
 
-use crossterm::event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode};
+use crossterm::event::{self as cevent, DisableMouseCapture, EnableMouseCapture, Event, KeyCode};
 use crossterm::execute;
 use crossterm::terminal::{
     disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen,
@@ -30,7 +30,7 @@ fn run<B: Backend>(
             .unwrap_or_else(|| Duration::from_secs(0));
 
         if crossterm::event::poll(timeout)? {
-            if let Event::Key(key) = event::read()? {
+            if let Event::Key(key) = cevent::read()? {
                 match key.code {
                     KeyCode::Esc => app.input_mode = app::InputMode::Normal,
                     KeyCode::Char('i') => app.input_mode = app::InputMode::Insert,

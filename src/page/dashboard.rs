@@ -8,7 +8,7 @@ use tui::{
     Frame,
 };
 
-pub fn draw_dashboard<B>(f: &mut Frame<B>, app: &App, chunk: Rect, focus: bool)
+pub fn draw_dashboard<B>(f: &mut Frame<B>, _app: &App, chunk: Rect, focus: bool)
 where
     B: Backend,
 {
